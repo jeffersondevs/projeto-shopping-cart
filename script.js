@@ -5,14 +5,20 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const itemsCar = document.querySelector('.cart__items');
+const btnVazio = document.querySelector('.empty-cart');
+const cartLista = document.querySelector('.cart__items');
+
+btnVazio.addEventListener('click', () => {
+  cartLista.innerHTML = null;
+});
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 };
-
-const itemsCar = document.querySelector('.cart__items');
 
 const cartItemClick = ({ target }) => {
   target.remove();
