@@ -12,6 +12,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const itemsCar = document.querySelector('.cart__items');
+
  const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -20,10 +22,10 @@ const createCustomElement = (element, className, innerText) => {
   return li;
 };
 
-const getId = ({ target }) => {
+const pegaId = ({ target }) => {
   const id = target.parentNode.firstChild.innerText;
   fetchItem(id).then((e) => {
-    cartItems.appendChild(createCartItemElement(e));
+    itemsCar.appendChild(createCartItemElement(e));
   });
 };
 
@@ -35,8 +37,8 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  const addToCart = document.querySelectorAll('.item__add');
-  addToCart.forEach((e) => e.addEventListener('click', getId));
+  const adicionaCar = document.querySelectorAll('.item__add');
+  adicionaCar.forEach((e) => e.addEventListener('click', pegaId));
 
   return section;
 };
