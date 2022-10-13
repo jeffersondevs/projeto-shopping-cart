@@ -1,7 +1,7 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
-const { fetchItem } = require("./helpers/fetchItem");
+const { fetchItem } = require('./helpers/fetchItem');
 
 /* const { fetchProducts } = require('./helpers/fetchProducts');
 const { results } = require('./mocks/search'); */
@@ -87,7 +87,6 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
-
 
 window.onload = () => { };
 const sectionItens = document.querySelector('.items');
