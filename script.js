@@ -14,11 +14,16 @@ const createCustomElement = (element, className, innerText) => {
 
 const itemsCar = document.querySelector('.cart__items');
 
+const cartItemClick = ({ target }) => {
+  target.remove();
+};
+
  const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
   /* li.addEventListener('click', cartItemClickListener); */
+  li.addEventListener('click', cartItemClick);
   return li;
 };
 
