@@ -20,7 +20,7 @@ describe('2 - Teste a função fetchItem', () => {
     const resposta = await fetchItem('MLB1615760527');
     expect(resposta).toEqual(item);
   });
-  test('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: 'You must provide an url'', () => {
+  test('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: "You must provide an url"', () => {
     expect(fetchItem()).rejects.toThrow('You must provide an url');
   });
 });

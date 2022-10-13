@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+const { fetchItem } = require("./helpers/fetchItem");
+
 /* const { fetchProducts } = require('./helpers/fetchProducts');
 const { results } = require('./mocks/search'); */
 
@@ -18,6 +20,30 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const createCustomElement = (element, className, innerText) => {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+};
+
+const cartItems = document.querySelector('.cart__items');
+
+const createCartItemElement = ({ id, title, price }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
+  /* li.addEventListener('click', cartItemClickListener); */
+  return li;
+};
+
+const pegaId = ({ target }) => {
+  const id = target.parentNode.firstChild.innerText;
+  fetchItem(id).then((element) => {
+    cartItems.appendChild(createCartItemElement(element));
+  });
+};
+
 /**
  * Função responsável por criar e retornar qualquer elemento.
  * @param {string} element - Nome do elemento a ser criado.
@@ -25,12 +51,6 @@ const createProductImageElement = (imageSource) => {
  * @param {string} innerText - Texto do elemento.
  * @returns {Element} Elemento criado.
  */
-const createCustomElement = (element, className, innerText) => {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
-};
 
 /**
  * Função responsável por criar e retornar o elemento do produto.
@@ -43,11 +63,11 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ id, title, thumbnail }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item_id', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const adicionaCar = document.querySelectorAll('.item__add');
+  adicionaCar.forEach((element) => element.addEventListener('click', pegaId));
 
   return section;
 };
@@ -67,13 +87,7 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
-const createCartItemElement = ({ id, title, price }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
+
 
 window.onload = () => { };
 const sectionItens = document.querySelector('.items');
