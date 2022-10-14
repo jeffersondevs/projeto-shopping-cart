@@ -1,5 +1,6 @@
-const itemsCar = document.querySelector('.cart__items');
+/* const itemsCar = document.querySelector('.cart__items'); */
 const btnVazio = document.querySelector('.empty-cart');
+const cartLista = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -45,7 +46,7 @@ const cartItemClick = ({ target }) => {
 const pegaId = ({ target }) => {
   const id = target.parentNode.firstChild.innerText;
   fetchItem(id).then((e) => {
-    itemsCar.appendChild(createCartItemElement(e));
+    cartLista.appendChild(createCartItemElement(e));
     atualizaLocal();
   });
 };
