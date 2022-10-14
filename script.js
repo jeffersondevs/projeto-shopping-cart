@@ -68,10 +68,10 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 
 const adicionaListeners = () => {
   const adicionarNoCar = document.querySelectorAll('.cart__item');
-  adicionarNoCar.forEach((element) => element.addEventListener('click', cartItemClick)
-  );
+  adicionarNoCar.forEach((element) => {
+    element.addEventListener('click', cartItemClick);
+  });
 };
-
 const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
 const sectionItens = document.querySelector('.items');
