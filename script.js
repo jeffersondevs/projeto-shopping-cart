@@ -1,12 +1,20 @@
 /* const itemsCar = document.querySelector('.cart__items'); */
 const btnVazio = document.querySelector('.empty-cart');
 const cartLista = document.querySelector('.cart__items');
+const precoTotalDiv = document.querySelector('.total-price');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
+};
+
+const atualizaPreco = () => {
+  const items = document.querySelectorAll('.cart__item');
+  const itemsArray = Array.from(items);
+  const precoTotal = itemsArray.reduce((e, valor) => e + Number(valor.innerText.split('$')[1]), 0);
+  precoTotalDiv.innerText = precoTotal;
 };
 
 const atualizaLocal = () => {
@@ -33,6 +41,7 @@ const createCustomElement = (element, className, innerText) => {
 const cartItemClick = ({ target }) => {
   target.remove();
   atualizaLocal();
+  atualizaPreco();
 };
 
  const createCartItemElement = ({ id, title, price }) => {
@@ -47,6 +56,7 @@ const pegaId = ({ target }) => {
   const id = target.parentNode.firstChild.innerText;
   fetchItem(id).then((e) => {
     cartLista.appendChild(createCartItemElement(e));
+    atualizaPreco();
     atualizaLocal();
   });
 };
