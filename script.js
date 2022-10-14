@@ -1,13 +1,12 @@
+const itemsCar = document.querySelector('.cart__items');
+const btnVazio = document.querySelector('.empty-cart');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 };
-
-const itemsCar = document.querySelector('.cart__items');
-const btnVazio = document.querySelector('.empty-cart');
-const cartLista = document.querySelector('.cart__items');
 
 const atualizaLocal = () => {
   localStorage.clear();
@@ -39,7 +38,6 @@ const cartItemClick = ({ target }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  /* li.addEventListener('click', cartItemClickListener); */
   li.addEventListener('click', cartItemClick);
   return li;
 };
