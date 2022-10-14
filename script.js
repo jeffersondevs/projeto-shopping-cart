@@ -1,7 +1,18 @@
-/* const itemsCar = document.querySelector('.cart__items'); */
 const btnVazio = document.querySelector('.empty-cart');
 const cartLista = document.querySelector('.cart__items');
 const precoTotalDiv = document.querySelector('.total-price');
+const carregandoContainer = document.querySelector('.carregandoContainer');
+
+const carregarRequisicao = () => {
+  const elemento = document.createElement('span');
+  elemento.className = 'loading';
+  elemento.innerText = 'carregando...';
+  carregandoContainer.appendChild(elemento);
+};
+
+const deletaCarregamento = () => {
+  carregandoContainer.innerHTML = null;
+};
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -58,7 +69,9 @@ const pegaId = ({ target }) => {
     cartLista.appendChild(createCartItemElement(e));
     atualizaPreco();
     atualizaLocal();
+    carregarRequisicao();
   });
+  deletaCarregamento();
 };
 
 const createProductItemElement = ({ id, title, thumbnail }) => {
@@ -79,15 +92,17 @@ const adicionaListeners = () => {
   const adicionarNoCar = document.querySelectorAll('.cart__item');
   adicionarNoCar.forEach((element) => element.addEventListener('click', cartItemClick));
 };
-const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
+/* const getIdFromProductItem = (product) => product.querySelector('span.id').innerText; */
 
 const sectionItens = document.querySelector('.items');
 
-window.onload = () => {
+window.onload = async () => {
+  carregarRequisicao();
   fetchProducts('computador').then(({ results }) => {
     results.forEach((element) => {
       sectionItens.appendChild(createProductItemElement(element));
     });
+    deletaCarregamento();
   });
   recuperaLocal();
   adicionaListeners();
