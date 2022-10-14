@@ -9,8 +9,18 @@ const itemsCar = document.querySelector('.cart__items');
 const btnVazio = document.querySelector('.empty-cart');
 const cartLista = document.querySelector('.cart__items');
 
+const atualizaLocal = () => {
+  localStorage.clear();
+  saveCartItems(cartLista.innerHTML);
+};
+
+const recuperaLocal = () => {
+  cartLista.innerHTML = getSavedCartItems();
+};
+
 btnVazio.addEventListener('click', () => {
   cartLista.innerHTML = null;
+  atualizaLocal();
 });
 
 const createCustomElement = (element, className, innerText) => {
@@ -22,6 +32,7 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClick = ({ target }) => {
   target.remove();
+  atualizaLocal();
 };
 
  const createCartItemElement = ({ id, title, price }) => {
@@ -37,6 +48,7 @@ const pegaId = ({ target }) => {
   const id = target.parentNode.firstChild.innerText;
   fetchItem(id).then((e) => {
     itemsCar.appendChild(createCartItemElement(e));
+    atualizaLocal();
   });
 };
 
@@ -54,6 +66,12 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   return section;
 };
 
+const adicionaListeners = () => {
+  const adicionarNoCar = document.querySelectorAll('.cart__item');
+  adicionarNoCar.forEach((element) => element.addEventListener('click', cartItemClick)
+  );
+};
+
 const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
 const sectionItens = document.querySelector('.items');
@@ -64,4 +82,6 @@ window.onload = () => {
       sectionItens.appendChild(createProductItemElement(element));
     });
   });
+  /* recuperaLocal(); */
+  adicionaListeners();
 };
