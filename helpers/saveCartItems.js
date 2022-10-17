@@ -1,6 +1,6 @@
 const saveCartItems = (items) => {
   // seu código aqui
- return localStorage.setItem('cartItems', items);
+  localStorage.setItem('cartItems', items);
 };
 
 if (typeof module !== 'undefined') {

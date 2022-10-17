@@ -28,18 +28,26 @@ const atualizaPreco = () => {
   precoTotalDiv.innerText = precoTotal;
 };
 
-const atualizaLocal = () => {
-  localStorage.clear();
-  saveCartItems(cartLista.innerHTML);
+const atualizaLocal = (item) => {
+  if (localStorage.cartItems) {
+    const saveLocalStorage = JSON.parse(getSavedCartItems());
+    saveLocalStorage.push(item);
+    saveCartItems(JSON.stringify(saveLocalStorage));
+    return;
+  }
+  saveCartItems(JSON.stringify([item]));
 };
 
 const recuperaLocal = () => {
-  cartLista.innerHTML = getSavedCartItems();
+  const saveLocalStorage = JSON.parse(getSavedCartItems());
+  saveLocalStorage.forEach((element) => {
+    cartLista.appendChild(createCartItemElement(element));
+  });
 };
 
 btnVazio.addEventListener('click', () => {
   cartLista.innerHTML = null;
-  atualizaLocal();
+  localStorage.removeItem('cartItems')
 });
 
 const createCustomElement = (element, className, innerText) => {
@@ -49,9 +57,13 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartItemClick = ({ target }) => {
-  target.remove();
-  atualizaLocal();
+const cartItemClick = (item) => {
+  item.target.remove();
+  /* atualizaLocal(item); */
+  const totalItems = JSON.parse(getSavedCartItems());
+  const index = totalItems.indexOf(item);
+  totalItems.splice(index, 1);
+  saveCartItems(JSON.stringify(totalItems));
   atualizaPreco();
 };
 
@@ -68,7 +80,7 @@ const pegaId = ({ target }) => {
   fetchItem(id).then((e) => {
     cartLista.appendChild(createCartItemElement(e));
     atualizaPreco();
-    atualizaLocal();
+    atualizaLocal(e);
     carregarRequisicao();
   });
   deletaCarregamento();
@@ -104,6 +116,9 @@ window.onload = async () => {
     });
     deletaCarregamento();
   });
-  recuperaLocal();
+  if (localStorage.cartItems) {
+    recuperaLocal();
+  }
+  atualizaPreco();
   adicionaListeners();
 };
