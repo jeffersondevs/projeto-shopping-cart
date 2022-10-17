@@ -38,6 +38,23 @@ const atualizaLocal = (item) => {
   saveCartItems(JSON.stringify([item]));
 };
 
+const cartItemClick = (item) => {
+  item.target.remove();
+  const totalItems = JSON.parse(getSavedCartItems());
+  const index = totalItems.indexOf(item);
+  totalItems.splice(index, 1);
+  saveCartItems(JSON.stringify(totalItems));
+  atualizaPreco();
+};
+
+const createCartItemElement = ({ id, title, price }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClick);
+  return li;
+};
+
 const recuperaLocal = () => {
   const saveLocalStorage = JSON.parse(getSavedCartItems());
   saveLocalStorage.forEach((element) => {
@@ -47,7 +64,7 @@ const recuperaLocal = () => {
 
 btnVazio.addEventListener('click', () => {
   cartLista.innerHTML = null;
-  localStorage.removeItem('cartItems')
+  localStorage.removeItem('cartItems');
 });
 
 const createCustomElement = (element, className, innerText) => {
@@ -55,24 +72,6 @@ const createCustomElement = (element, className, innerText) => {
   e.className = className;
   e.innerText = innerText;
   return e;
-};
-
-const cartItemClick = (item) => {
-  item.target.remove();
-  /* atualizaLocal(item); */
-  const totalItems = JSON.parse(getSavedCartItems());
-  const index = totalItems.indexOf(item);
-  totalItems.splice(index, 1);
-  saveCartItems(JSON.stringify(totalItems));
-  atualizaPreco();
-};
-
- const createCartItemElement = ({ id, title, price }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClick);
-  return li;
 };
 
 const pegaId = ({ target }) => {
