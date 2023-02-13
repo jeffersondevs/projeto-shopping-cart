@@ -6,7 +6,7 @@ const carregandoContainer = document.querySelector('.carregandoContainer');
 const carregarRequisicao = () => {
   const elemento = document.createElement('span');
   elemento.className = 'loading';
-  elemento.innerText = 'carregando...';
+  /* elemento.innerText = 'carregando...'; */
   carregandoContainer.appendChild(elemento);
 };
 
@@ -36,6 +36,8 @@ const atualizaLocal = (item) => {
     return;
   }
   saveCartItems(JSON.stringify([item]));
+
+  
 };
 
 const cartItemClick = (item) => {
