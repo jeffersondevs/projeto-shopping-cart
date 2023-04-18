@@ -5,6 +5,20 @@ const cartLista = document.querySelector('.cart__items');
 const precoTotalDiv = document.querySelector('.total-price');
 const carregandoContainer = document.querySelector('.carregandoContainer');
 
+const showCategories = async () => {
+  const categories = await fetchCategories(); // Função que busca as categorias da API
+  const categoriesList = document.querySelector('.categories-list');
+
+  categories.forEach((category) => {
+    const categoryOption = document.createElement('option');
+    categoryOption.value = category.id;
+    categoryOption.innerText = category.name;
+    categoriesList.appendChild(categoryOption);
+  });
+};
+
+showCategories();
+
 const clearProductList = () => {
   const sectionItens = document.querySelector('.items');
   sectionItens.innerHTML = '<div class="empty-message">Nenhum produto encontrado.</div>';
