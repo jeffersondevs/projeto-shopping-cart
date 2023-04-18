@@ -13,17 +13,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,700,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
     <script src="./helpers/fetchItem.js" defer></script>
-    <script src="./helpers/fetchProducts.js" defer></script>
+    <script src="./helpers/mercadoLivreAPI.js" defer></script>
     <script src="./helpers/saveCartItems.js" defer></script>
     <script src="./helpers/getSavedCartItems.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
   </head>
   <body>
     <header class="header">
       <div class="container-title">
         <span class="title"><strong>trybe</strong>shopping</span>
       </div>
-
+      
       <label for="pesquisaInput" class="section-pesquisa">
         <input id="pesquisaInput" class="pesquisa" type="text" placeholder="Pesquisar Produtos" >
         <span class="material-symbols-outlined span-search">
@@ -35,8 +35,11 @@
         <span class="cart__title">Meu carrinho</span>
       </div>
     </header>
+    <select class="categories-list"></select>
     <section class="container">
-      <section class="items"></section>
+      <section class="items">
+        <div class="product-list-empty">Nenhum produto encontrado.</div>
+      </section>
       <section class="cart">
         <ol class="cart__items"></ol>
         <button class="empty-cart">Esvaziar Carrinho</button>
