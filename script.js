@@ -5,6 +5,23 @@ const cartLista = document.querySelector('.cart__items');
 const precoTotalDiv = document.querySelector('.total-price');
 const carregandoContainer = document.querySelector('.carregandoContainer');
 
+const clearProductList = () => {
+  const sectionItens = document.querySelector('.items');
+  sectionItens.innerHTML = '<div class="empty-message">Nenhum produto encontrado.</div>';
+  productList.innerHTML = '';
+};
+
+const checkProductList = () => {
+  const productList = document.querySelector('.items');
+  const emptyMessage = document.querySelector('.product-list-empty');
+
+  if (productList.children.length === 0) {
+    emptyMessage.style.display = 'block';
+  } else {
+    emptyMessage.style.display = 'none';
+  }
+};
+
 const carregarRequisicao = () => {
   const elemento = document.createElement('span');
   elemento.className = 'loading';
@@ -120,10 +137,15 @@ window.onload = async () => {
   const products = results;
   /* console.log('Produtos obtidos:', products); */
 
+  const sectionItens = document.querySelector('.items');
 
-  results.forEach((element) => {
-    sectionItens.appendChild(createProductItemElement(element));
-  });
+  if (products.length === 0) {
+    clearProductList();
+  } else {
+    products.forEach((element) => {
+      sectionItens.appendChild(createProductItemElement(element));
+    });
+  } 
 
     deletaCarregamento();
 
@@ -132,4 +154,6 @@ window.onload = async () => {
   }
   atualizaPreco();
   adicionaListeners();
+
+  checkProductList();
 };
