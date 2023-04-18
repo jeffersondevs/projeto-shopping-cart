@@ -1,3 +1,5 @@
+import { fetchCategories, fetchProductsByCategory } from './helpers/mercadoLivreAPI.js';
+
 const btnVazio = document.querySelector('.empty-cart');
 const cartLista = document.querySelector('.cart__items');
 const precoTotalDiv = document.querySelector('.total-price');
@@ -111,12 +113,20 @@ const sectionItens = document.querySelector('.items');
 
 window.onload = async () => {
   carregarRequisicao();
-  fetchProducts('computador').then(({ results }) => {
-    results.forEach((element) => {
-      sectionItens.appendChild(createProductItemElement(element));
-    });
-    deletaCarregamento();
+  const categories = await fetchCategories();
+  /* console.log('Categorias obtidas:', categories); */
+  const firstCategory = categories[0].id;
+  const { results } = await fetchProductsByCategory(firstCategory);
+  const products = results;
+  /* console.log('Produtos obtidos:', products); */
+
+
+  results.forEach((element) => {
+    sectionItens.appendChild(createProductItemElement(element));
   });
+
+    deletaCarregamento();
+
   if (localStorage.cartItems) {
     recuperaLocal();
   }
