@@ -1,4 +1,9 @@
-import { fetchCategories, fetchProductsByCategory, fetchProdutcsByQuery } from './helpers/mercadoLivreAPI.js';
+import { 
+  fetchCategories, 
+  fetchProductsByCategory, 
+  fetchProdutcsByQuery,
+} from './helpers/mercadoLivreAPI.js';
+import { fetchItem } from './helpers/fetchItem.js';
 
 const btnVazio = document.querySelector('.empty-cart');
 const cartLista = document.querySelector('.cart__items');
@@ -7,9 +12,52 @@ const carregandoContainer = document.querySelector('.carregandoContainer');
 const selectCategories = document.querySelector('.categories-list');
 const emptyMessage = document.querySelector('.product-list-empty');
 const productList = document.querySelector('.items');
-
+const sectionItens = document.querySelector('.items');
 const formPesquisa = document.querySelector('.section-pesquisa');
+const sortOrderSelect = document.querySelector('.sort-order');
 
+const sortProducts = (products, sortOrder) => {
+  if (sortOrder === 'price_asc') {
+    return products.sort((a, b) => a.price - b.price);
+  } else if (sortOrder === 'price_desc') {
+    return products.sort((a, b) => b.price - a.price);
+  }
+  return products;
+};
+
+sortOrderSelect.addEventListener('change', async (event) => {
+  const sortOrder = event.target.value;
+
+  // Obter a lista atual de produtos (por categoria ou pesquisa)
+  const currentCategory = selectCategories.value;
+  const currentQuery = document.querySelector('#pesquisaInput').value;
+
+  let products;
+  if (currentCategory) {
+    const { results } = await fetchProductsByCategory(currentCategory);
+    products = results;
+  } else if (currentQuery) {
+    const { results } = await fetchProdutcsByQuery(currentQuery);
+    products = results;
+  }
+
+  // Ordenar produtos
+  const sortedProducts = sortProducts(products, sortOrder);
+
+  // Limpar a lista de produtos
+  sectionItens.innerHTML = '';
+
+  // Atualizar a lista de produtos com os produtos ordenados
+  if (sortedProducts.length === 0) {
+    clearProductList();
+  } else {
+    sortedProducts.forEach((element) => {
+      sectionItens.appendChild(createProductItemElement(element));
+    });
+  }
+
+  checkProductList();
+});
 
 formPesquisa.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -169,9 +217,11 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('span', 'item_id', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  const adicionaCar = document.querySelectorAll('.item__add');
-  adicionaCar.forEach((e) => e.addEventListener('click', pegaId));
+  
+  const btnAdicionar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  btnAdicionar.addEventListener('click', pegaId);
+
+  section.appendChild(btnAdicionar);
 
   return section;
 };
@@ -182,18 +232,13 @@ const adicionaListeners = () => {
 };
 /* const getIdFromProductItem = (product) => product.querySelector('span.id').innerText; */
 
-const sectionItens = document.querySelector('.items');
 
 window.onload = async () => {
   carregarRequisicao();
   const categories = await fetchCategories();
-  /* console.log('Categorias obtidas:', categories); */
   const firstCategory = categories[0].id;
   const { results } = await fetchProductsByCategory(firstCategory);
   const products = results;
-  /* console.log('Produtos obtidos:', products); */
-
-  const sectionItens = document.querySelector('.items');
 
   if (products.length === 0) {
     clearProductList();
