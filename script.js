@@ -1,4 +1,4 @@
-import { fetchCategories, fetchProductsByCategory } from './helpers/mercadoLivreAPI.js';
+import { fetchCategories, fetchProductsByCategory, fetchProdutcsByQuery } from './helpers/mercadoLivreAPI.js';
 
 const btnVazio = document.querySelector('.empty-cart');
 const cartLista = document.querySelector('.cart__items');
@@ -7,6 +7,31 @@ const carregandoContainer = document.querySelector('.carregandoContainer');
 const selectCategories = document.querySelector('.categories-list');
 const emptyMessage = document.querySelector('.product-list-empty');
 const productList = document.querySelector('.items');
+
+const formPesquisa = document.querySelector('.section-pesquisa');
+
+
+formPesquisa.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const pesquisaInput = document.querySelector('#pesquisaInput');
+  const query = pesquisaInput.value;
+
+  const { results } = await fetchProdutcsByQuery(query);
+  const products = results;
+
+  productList.innerHTML = ''; // Limpa a lista de produtos
+
+  if (products.length === 0) {
+    clearProductList();
+  } else {
+    products.forEach((element) => {
+      productList.appendChild(createProductItemElement(element));
+    });
+  }
+
+  checkProductList();
+});
 
 
 const showCategories = async () => {
