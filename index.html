@@ -12,10 +12,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,700,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0" />
-    <script src="./helpers/fetchItem.js" defer></script>
+   <!--  <script src="./helpers/fetchItem.js" defer></script> -->
     <script src="./helpers/mercadoLivreAPI.js" defer></script>
-    <script src="./helpers/saveCartItems.js" defer></script>
-    <script src="./helpers/getSavedCartItems.js" defer></script>
+    <!-- <script src="./helpers/saveCartItems.js" defer></script> -->
+    <!-- <script src="./helpers/getSavedCartItems.js" defer></script> -->
     <script src="script.js" type="module" defer></script>
   </head>
   <body>
@@ -24,12 +24,11 @@
         <span class="title"><strong>trybe</strong>shopping</span>
       </div>
       
-      <label for="pesquisaInput" class="section-pesquisa">
-        <input id="pesquisaInput" class="pesquisa" type="text" placeholder="Pesquisar Produtos" >
-        <span class="material-symbols-outlined span-search">
-          search
-        </span>
-      </label>
+      <form class="section-pesquisa">
+        <input type="text" id="pesquisaInput" placeholder="Pesquisar por palavra-chave">
+        <button type="submit">Pesquisar</button>
+      </form>
+
       <i class="material-icons" style="font-size:45px;color:white">shopping_cart</i>
       <div class="container-cartTitle">
         <span class="cart__title">Meu carrinho</span>
