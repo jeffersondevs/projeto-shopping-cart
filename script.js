@@ -7,6 +7,7 @@ const carregandoContainer = document.querySelector('.carregandoContainer');
 const selectCategories = document.querySelector('.categories-list');
 const emptyMessage = document.querySelector('.product-list-empty');
 const productList = document.querySelector('.items');
+
 const formPesquisa = document.querySelector('.section-pesquisa');
 
 
