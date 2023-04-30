@@ -26,7 +26,7 @@ HTML
 CSS
 
 ✒️ Autor Jefferson Santos 
-- Desenvolvedor [GitHub: Jeffersondevs](https://github.com/jeffersondevs)
+- Teste Aplicação: [Acesse:]([https://github.com/jeffersondevs](https://644e96a401e7386a105212c8--fastidious-sorbet-4a4c76.netlify.app/))
 
 📄 Licença
 Este projeto está sob a licença MIT.
